@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 216 16% 12%;
+  --foreground: 0 0% 100%;
+
+  --card: 210 10% 21%;
+  --card-foreground: 0 0% 100%;
+
+  --popover: 210 10% 21%;
+  --popover-foreground: 0 0% 100%;
+
+  --primary: 0 100% 35%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 210 10% 25%;
+  --secondary-foreground: 0 0% 100%;
+
+  --muted: 210 10% 30%;
+  --muted-foreground: 0 0% 70%;
+
+  --accent: 0 100% 35%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 210 10% 30%;
+  --input: 210 10% 25%;
+  --ring: 0 100% 35%;
+
+  --radius: 0.75rem;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* iOS Safari: voorkom zoom op input focus */
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+
+@media (min-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: 14px; /* of wat je wilt op desktop */
+  }
+}
