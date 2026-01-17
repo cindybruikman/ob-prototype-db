@@ -6,11 +6,11 @@ import Link from "next/link";
 import { MapPin, Search } from "lucide-react";
 import Image from "next/image";
 
-import { NewsCard } from "@/components/news/NewsCard";
+import { PersonalisedNewsCard } from "@/components/news/PersonalisedNewsCard";
 import { BottomNav } from "@/components/layout/BottomNav";
 
 import { backendMockArticles } from "@/lib/mockDataBackend";
-import { mapBackendToUI } from "@/lib/mapBackendToUI";
+import { ApiLocationGroup, mapBackendToUI, UIArticle } from "@/lib/mapBackendToUI";
 import {
   getPreferences,
   filterArticlesByPreferences,
@@ -34,6 +34,10 @@ export default function VoorMijPage() {
 
   const containerClass = "mx-auto w-full max-w-[808px] px-4";
 
+  const [articleGroups, setArticleGroups] = useState<ApiLocationGroup[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   // 1) localStorage => alleen client
   useEffect(() => {
     const prefs = getPreferences();
@@ -48,16 +52,35 @@ export default function VoorMijPage() {
       router.replace("/location");
       return;
     }
+
+    // Alleen fetchen als user setup klaar is
+    const fetchArticles = async () => {
+      try {
+        setLoading(true);
+
+        const res = await fetch(`http://localhost:8000/personalisation/${prefs.userid}`, {
+          method: "GET",
+        });
+        if (!res.ok) {
+          throw new Error("Failed to fetch articles");
+        }
+
+        const backendArticles = await res.json();
+        console.log(backendArticles.articles);
+
+        setArticleGroups(backendArticles.articles);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+
+
+
   }, [router]);
-
-  // 2) backend mock -> UI model
-  const articles = useMemo(() => backendMockArticles.map(mapBackendToUI), []);
-
-  // 3) filter op savedLocations (live of region)
-  const filteredArticles = useMemo(() => {
-    if (!preferences) return [];
-    return filterArticlesByPreferences(articles, preferences);
-  }, [articles, preferences]);
 
   // 4) header labels
   // ✅ actieve locaties = regions + current (alleen als live aan staat)
@@ -113,22 +136,6 @@ export default function VoorMijPage() {
           </div>
 
           <div className="relative flex items-center">
-            {/* Rode flap */}
-            {/* <div
-              aria-hidden
-              className="
-                absolute
-                -right-12
-                -top-10
-                w-24
-                h-20
-                bg-[#e00]
-                rounded-2xl
-                rotate-[-20deg]
-                z-0
-              "
-            /> */}
-
             {/* Search icon */}
             <button
               type="button"
@@ -178,16 +185,33 @@ export default function VoorMijPage() {
       </div>
 
       {/* Artikelen */}
-      <main className="py-4 space-y-3">
-        {filteredArticles.map((article) => (
-          <NewsCard
-            key={article.id}
-            article={article}
-            variant="compact"
-            showLocation={false}
-            showSummary={false}
-            showDate={false}
-          />
+      {loading ? "Bezig met artikelen laden..." : null}
+      {error ? error : null}
+      
+      <main className="py-4 space-y-6">
+        {articleGroups.map((group) => (
+          <section key={group.locationName} className="mx-auto w-full max-w-[808px] px-4">
+            <h2 className="text-lg font-semibold">
+              {group.locationName}
+            </h2>
+
+            {group.articles.length === 0 ? (
+              <p className="text-sm text-muted-foreground">
+                Geen artikelen beschikbaar
+              </p>
+            ) : (
+              group.articles.map((article) => (
+                <PersonalisedNewsCard
+                  key={article.id}
+                  article={article}
+                  variant="compact"
+                  showLocation={false}
+                  showSummary={false}
+                  showDate={false}
+                />
+              ))
+            )}
+          </section>
         ))}
       </main>
 

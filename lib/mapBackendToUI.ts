@@ -17,8 +17,22 @@ export type UIArticle = {
   isNew?: boolean;
   isTrending?: boolean;
   aiSummaryBlocks?: ContentBlock[];
-  updatedAt: string;
+  updatedAt?: string;
 };
+
+export type ApiArticle = {
+    id: string;
+    title: string;
+    teaser: string;
+    regionName: string;
+    imageUrl?: string;
+  };
+
+export type ApiLocationGroup = {
+    locationName: string;
+    articles: ApiArticle[];
+  };
+
 
 function pickString(...values: Array<unknown>): string {
   for (const v of values) {
@@ -87,19 +101,17 @@ export function mapBackendToUI(a: BackendArticle): UIArticle {
     .join("\n\n");
 
   const summary = (a.aiSummary ?? [])
-    .filter((b: any) => b?.type === "paragraph" || b?.type === "quote")
-    .map((b: any) => (b.type === "quote" ? `“${b.text ?? ""}”` : b.text ?? ""))
-    .filter(Boolean)
-    .join("\n\n");
+  .filter((b: any) => typeof b === "string")
+  .join("\n\n");
 
   const coords = getCoordsForRegion(a.regionName);
 
   return {
     id: a._id,
     title: a.title,
-    summary: summary || a.teaser,
+    summary: summary || "Geen samenvatting beschikbaar",
 
-    keyPoints: a.aiKeyPoints || [],
+    keyPoints: a.aiKeyPoints || ["Geen kernpunten beschikbaar"],
     fullContent,
     location: pickRegionName(a) || "Onbekende regio",
     category: pickTheme(a) || "Onbekend thema",

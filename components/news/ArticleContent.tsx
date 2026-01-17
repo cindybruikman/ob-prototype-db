@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils";
 import { Article } from "@/lib/mockData";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { UIArticle } from "@/lib/mapBackendToUI";
 
 interface ArticleContentProps {
-  article: Article;
+  article: UIArticle;
 }
 
 type ViewMode = "keypoints" | "summary" | "full";
@@ -51,6 +52,9 @@ export function ArticleContent({ article }: ArticleContentProps) {
             <Clock className="w-4 h-4" />
             {article.publishedAt}
             {article.updatedAt && ` • ${article.updatedAt}`}
+          </span>
+          <span className="flex items-center gap-1">
+            {article.category}
           </span>
         </div>
 
@@ -107,35 +111,6 @@ export function ArticleContent({ article }: ArticleContentProps) {
             </button>
           </div>
         </div>
-
-        {/*TEST */}
-
-        {/* <div className="flex gap-2">
-          <Button
-            variant={viewMode === "keypoints" ? "pillActive" : "pill"}
-            size="pill"
-            onClick={() => setViewMode("keypoints")}
-            type="button"
-          >
-            Kernpunten
-          </Button>
-          <Button
-            variant={viewMode === "summary" ? "pillActive" : "pill"}
-            size="pill"
-            onClick={() => setViewMode("summary")}
-            type="button"
-          >
-            Samenvatting
-          </Button>
-          <Button
-            variant={viewMode === "full" ? "pillActive" : "pill"}
-            size="pill"
-            onClick={() => setViewMode("full")}
-            type="button"
-          >
-            Volledig artikel
-          </Button>
-        </div> */}
       </div>
 
       {isAiView ? (

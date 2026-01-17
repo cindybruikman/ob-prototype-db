@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Share2, Bookmark } from "lucide-react";
 import { toast } from "sonner";
@@ -10,19 +10,45 @@ import { BottomNav } from "@/components/layout/BottomNav";
 import { Button } from "@/components/ui/button";
 
 import { backendMockArticles } from "@/lib/mockDataBackend";
-import { mapBackendToUI } from "@/lib/mapBackendToUI";
+import { mapBackendToUI, UIArticle } from "@/lib/mapBackendToUI";
 
 export default function ArticlePage() {
   const params = useParams<{ id: string }>();
   const router = useRouter();
 
-  // ✅ Gebruik de gemapte UI-artikelen (die hebben "id", "summary", "keyPoints", etc.)
-  const article = useMemo(() => {
-    const id = params?.id;
-    if (!id) return null;
+  const [article, setArticle] = useState<UIArticle>(undefined as any);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    const uiArticles = backendMockArticles.map(mapBackendToUI);
-    return uiArticles.find((a) => a.id === id) ?? null;
+  // ✅ Gebruik de gemapte UI-artikelen (die hebben "id", "summary", "keyPoints", etc.)
+  useEffect(() => {
+    const id = params?.id;
+    if (!id) return;
+
+    const fetchArticle = async () => {
+      try {
+        setLoading(true);
+
+        const res = await fetch(`http://localhost:8000/articles/${id}`);
+        console.log(res);
+        if (!res.ok) {
+          throw new Error("Artikel niet gevonden");
+        }
+
+        const backendArticle = await res.json();
+
+        // indien nodig: map backend → UI
+        const uiArticle = mapBackendToUI(backendArticle);
+
+        setArticle(uiArticle);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticle();
   }, [params?.id]);
 
   const handleShare = async () => {
@@ -49,7 +75,7 @@ export default function ArticlePage() {
     });
   };
 
-  if (!article) {
+  if (!article && !loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center px-4">
         <div className="text-center space-y-4">
@@ -59,6 +85,9 @@ export default function ArticlePage() {
       </div>
     );
   }
+
+  if (loading) return "Bezig met laden...";
+  if (error) return {error};
 
   return (
     <div className="min-h-screen bg-background pb-20">

@@ -11,7 +11,7 @@ export interface BackendArticle {
   title: string;
   teaser: string;
   contentBlocks: ContentBlock[];
-  aiSummary: ContentBlock[];
+  aiSummary: string[];
   aiKeyPoints: string[];
   regionName: string;
   theme: string;
@@ -75,25 +75,10 @@ export const backendMockArticles: BackendArticle[] = [
       },
     ],
     aiSummary: [
-      {
-        type: "paragraph",
-        text: "Na recente uitbraken van vogelgriep in Brabant zijn opnieuw grote aantallen dieren geruimd. In Deurne moesten 162.000 vleeskuikens worden afgemaakt, eerder deze maand nog eens 80.000 bij een bedrijf in Uitwijk. De maatregelen zijn bedoeld om verdere verspreiding van het zeer besmettelijke virus te voorkomen.",
-      },
-
-      {
-        type: "paragraph",
-        text: "Vogelgriep komt bij vrijwel alle vogelsoorten voor en kan zich verspreiden via direct contact, de lucht en besmet materiaal. Wilde trekvogels spelen een belangrijke rol in het verspreiden van het virus. Besmette vogels worden ernstig ziek of sterven, afhankelijk van de variant van het virus.",
-      },
-
-      {
-        type: "paragraph",
-        text: "Voor mensen is besmetting zeldzaam en meestal mild, maar huisdieren zoals katten kunnen ernstig ziek worden. Daarom gelden er strenge maatregelen, waaronder een landelijke ophokplicht voor pluimvee, hobbykippen en watervogels. Wedstrijden en tentoonstellingen met deze dieren zijn voorlopig verboden.",
-      },
-
-      {
-        type: "paragraph",
-        text: "Volgens experts vormt besmet voedsel geen risico voor mensen. Vlees en eieren van besmette dieren komen niet in de winkel terecht en er is geen bewijs dat vogelgriep via voeding wordt overgedragen. Waakzaamheid en naleving van de maatregelen blijven essentieel om verdere uitbraken te voorkomen.",
-      },
+      "Na recente uitbraken van vogelgriep in Brabant zijn opnieuw grote aantallen dieren geruimd. In Deurne moesten 162.000 vleeskuikens worden afgemaakt, eerder deze maand nog eens 80.000 bij een bedrijf in Uitwijk. De maatregelen zijn bedoeld om verdere verspreiding van het zeer besmettelijke virus te voorkomen.",
+      "Vogelgriep komt bij vrijwel alle vogelsoorten voor en kan zich verspreiden via direct contact, de lucht en besmet materiaal. Wilde trekvogels spelen een belangrijke rol in het verspreiden van het virus. Besmette vogels worden ernstig ziek of sterven, afhankelijk van de variant van het virus.",
+      "Voor mensen is besmetting zeldzaam en meestal mild, maar huisdieren zoals katten kunnen ernstig ziek worden. Daarom gelden er strenge maatregelen, waaronder een landelijke ophokplicht voor pluimvee, hobbykippen en watervogels. Wedstrijden en tentoonstellingen met deze dieren zijn voorlopig verboden.",
+      "Volgens experts vormt besmet voedsel geen risico voor mensen. Vlees en eieren van besmette dieren komen niet in de winkel terecht en er is geen bewijs dat vogelgriep via voeding wordt overgedragen. Waakzaamheid en naleving van de maatregelen blijven essentieel om verdere uitbraken te voorkomen.",
     ],
 
     aiKeyPoints: [
@@ -179,22 +164,10 @@ export const backendMockArticles: BackendArticle[] = [
       },
     ],
     aiSummary: [
-      {
-        type: "paragraph",
-        text: "Gracia Katombe Nkulu vluchtte uit Congo om in Oekraïne arts te worden, gedreven door haar wens om bij te dragen aan betere gezondheidszorg. Na het overlijden van beide ouders zette zij haar studie onder moeilijke omstandigheden voort. In haar laatste studiejaar brak de oorlog uit, waardoor haar toekomst in Oekraïne instortte en zij via Polen naar Nederland vluchtte, waar zij haar opleiding alsnog afrondde.",
-      },
-      {
-        type: "paragraph",
-        text: "In Nederland bleek haar medische diploma niet direct inzetbaar. Ze moet een langdurig erkenningstraject doorlopen en een zeer hoog niveau Nederlands behalen om als arts te mogen werken. Om financieel rond te komen werkte ze in een supermarkt, terwijl haar motivatie om in de zorg te werken onverminderd bleef. Via een speciaal traject voor internationals begon ze in de ouderenzorg in Eindhoven.",
-      },
-      {
-        type: "paragraph",
-        text: "Juist toen zij haar plek begon te vinden, veranderden de regels rondom Oekraïense vluchtelingen. Ze ontving een brief van de IND waarin stond dat zij Nederland moest verlaten, ondanks een geldige werkvergunning. Haar contract werd stopgezet en zij raakte zonder werk en inkomen, waardoor haar toekomst opnieuw onzeker werd.",
-      },
-      {
-        type: "paragraph",
-        text: "Gracia heeft inmiddels asiel aangevraagd en mag voorlopig in Nederland blijven. Een nieuwe werkvergunning kan pas worden aangevraagd zodra haar verblijfsstatus duidelijk is, naar verwachting niet vóór maart 2026. Ondanks alles blijft zij vastberaden om in de zorg te werken en haar leven in Nederland op te bouwen.",
-      },
+      "Gracia Katombe Nkulu vluchtte uit Congo om in Oekraïne arts te worden, gedreven door haar wens om bij te dragen aan betere gezondheidszorg. Na het overlijden van beide ouders zette zij haar studie onder moeilijke omstandigheden voort. In haar laatste studiejaar brak de oorlog uit, waardoor haar toekomst in Oekraïne instortte en zij via Polen naar Nederland vluchtte, waar zij haar opleiding alsnog afrondde.",
+      "In Nederland bleek haar medische diploma niet direct inzetbaar. Ze moet een langdurig erkenningstraject doorlopen en een zeer hoog niveau Nederlands behalen om als arts te mogen werken. Om financieel rond te komen werkte ze in een supermarkt, terwijl haar motivatie om in de zorg te werken onverminderd bleef. Via een speciaal traject voor internationals begon ze in de ouderenzorg in Eindhoven.",
+      "Juist toen zij haar plek begon te vinden, veranderden de regels rondom Oekraïense vluchtelingen. Ze ontving een brief van de IND waarin stond dat zij Nederland moest verlaten, ondanks een geldige werkvergunning. Haar contract werd stopgezet en zij raakte zonder werk en inkomen, waardoor haar toekomst opnieuw onzeker werd.",
+       "Gracia heeft inmiddels asiel aangevraagd en mag voorlopig in Nederland blijven. Een nieuwe werkvergunning kan pas worden aangevraagd zodra haar verblijfsstatus duidelijk is, naar verwachting niet vóór maart 2026. Ondanks alles blijft zij vastberaden om in de zorg te werken en haar leven in Nederland op te bouwen.",
     ],
     aiKeyPoints: [
       "Gracia vluchtte uit Congo en studeerde geneeskunde in Oekraïne",
@@ -258,22 +231,10 @@ export const backendMockArticles: BackendArticle[] = [
       },
     ],
     aiSummary: [
-      {
-        type: "paragraph",
-        text: "Deze week werd opnieuw een ernstig datalek ontdekt, ditmaal bij de gemeente Eindhoven. Medewerkers voerden persoonsgegevens van kwetsbare burgers in bij een openbaar AI-platform zoals ChatGPT. Dat is in strijd met privacywetgeving en brengt grote risico’s met zich mee, omdat gevoelige gegevens zich daarna buiten de controle van de organisatie kunnen bevinden.",
-      },
-      {
-        type: "paragraph",
-        text: "De zaak is extra pijnlijk omdat de gemeente al twee jaar onder verscherpt toezicht stond van de Autoriteit Persoonsgegevens vanwege eerdere fouten bij het melden en bewaren van persoonsgegevens. Uit onderzoek blijkt dat onder meer Jeugdwet-dossiers met medische informatie van minderjarige kinderen, inclusief burgerservicenummers en foto’s, in AI-systemen terechtkwamen.",
-      },
-      {
-        type: "paragraph",
-        text: "Daarnaast zijn ook WMO-documenten met gegevens over diagnoses, verslavingen en schulden gedeeld, evenals cv’s van sollicitanten en interne reflectieverslagen. Volgens AI-expert Dimitri van Iersel is het verwijderen van deze data vrijwel onmogelijk zodra die onderdeel wordt van een trainingsmodel. Alleen het volledig schrappen van het model zou helpen, maar dat is in de praktijk niet realistisch.",
-      },
-      {
-        type: "paragraph",
-        text: "Hoewel de kans op directe schade klein lijkt, blijven risico’s zoals fraude en phishing aanwezig. Van Iersel wijst vooral op het gebrek aan duidelijke regels rondom AI-gebruik. Zonder heldere kaders nemen medewerkers zelf beslissingen, waardoor in een wereld met steeds meer AI-tools grote hoeveelheden gevoelige data op straat kunnen belanden.",
-      },
+      "Deze week werd opnieuw een ernstig datalek ontdekt, ditmaal bij de gemeente Eindhoven. Medewerkers voerden persoonsgegevens van kwetsbare burgers in bij een openbaar AI-platform zoals ChatGPT. Dat is in strijd met privacywetgeving en brengt grote risico’s met zich mee, omdat gevoelige gegevens zich daarna buiten de controle van de organisatie kunnen bevinden.",
+      "De zaak is extra pijnlijk omdat de gemeente al twee jaar onder verscherpt toezicht stond van de Autoriteit Persoonsgegevens vanwege eerdere fouten bij het melden en bewaren van persoonsgegevens. Uit onderzoek blijkt dat onder meer Jeugdwet-dossiers met medische informatie van minderjarige kinderen, inclusief burgerservicenummers en foto’s, in AI-systemen terechtkwamen.",
+      "Daarnaast zijn ook WMO-documenten met gegevens over diagnoses, verslavingen en schulden gedeeld, evenals cv’s van sollicitanten en interne reflectieverslagen. Volgens AI-expert Dimitri van Iersel is het verwijderen van deze data vrijwel onmogelijk zodra die onderdeel wordt van een trainingsmodel. Alleen het volledig schrappen van het model zou helpen, maar dat is in de praktijk niet realistisch.",
+      "Hoewel de kans op directe schade klein lijkt, blijven risico’s zoals fraude en phishing aanwezig. Van Iersel wijst vooral op het gebrek aan duidelijke regels rondom AI-gebruik. Zonder heldere kaders nemen medewerkers zelf beslissingen, waardoor in een wereld met steeds meer AI-tools grote hoeveelheden gevoelige data op straat kunnen belanden.",
     ],
     aiKeyPoints: [
       "Gemeente Eindhoven lekte persoonsgegevens via openbare AI-tools",
@@ -335,22 +296,10 @@ export const backendMockArticles: BackendArticle[] = [
       },
     ],
     aiSummary: [
-      {
-        type: "paragraph",
-        text: "Bas Zijlmans uit Oisterwijk is een petitie gestart tegen de mogelijke komst van een McDonald’s met drive-thru direct naast de beschermde bossen en vennen. Hij vreest dat het natuurgebied ernstige schade zal oplopen door afval, verkeer, geluidsoverlast en lucht- en lichtvervuiling. Binnen korte tijd kreeg zijn actie brede steun.",
-      },
-      {
-        type: "paragraph",
-        text: "Voor Bas heeft het gebied grote emotionele waarde. Hij groeide op in het natuurschoon rond Oisterwijk en komt er nog wekelijks om te wandelen. Volgens hem is rust essentieel voor de natuur en past een fastfoodrestaurant niet bij de identiteit van de plaats, die bekendstaat als ‘de parel in het groen’.",
-      },
-      {
-        type: "paragraph",
-        text: "Maandagmiddag stond de petitie al op ruim 9000 handtekeningen. De snelle groei verraste Bas, maar bevestigde voor hem dat veel inwoners dezelfde zorgen delen. Hij benadrukt dat hij niet tegen ontwikkeling is, maar dat plannen moeten passen bij de omgeving en het kwetsbare ecosysteem.",
-      },
-      {
-        type: "paragraph",
-        text: "Bas staat open voor alternatieven, zoals voorzieningen voor natuurfotografen, natuurbeheer of jongeren. Het voorstel van de projectontwikkelaar ligt nu bij de gemeente. In januari wil hij het gesprek aangaan met alle betrokkenen, waarbij hij het belangrijk vindt dat dit respectvol gebeurt, ook richting de ontwikkelaar.",
-      },
+      "Bas Zijlmans uit Oisterwijk is een petitie gestart tegen de mogelijke komst van een McDonald’s met drive-thru direct naast de beschermde bossen en vennen. Hij vreest dat het natuurgebied ernstige schade zal oplopen door afval, verkeer, geluidsoverlast en lucht- en lichtvervuiling. Binnen korte tijd kreeg zijn actie brede steun.",
+      "Voor Bas heeft het gebied grote emotionele waarde. Hij groeide op in het natuurschoon rond Oisterwijk en komt er nog wekelijks om te wandelen. Volgens hem is rust essentieel voor de natuur en past een fastfoodrestaurant niet bij de identiteit van de plaats, die bekendstaat als ‘de parel in het groen’.",
+      "Maandagmiddag stond de petitie al op ruim 9000 handtekeningen. De snelle groei verraste Bas, maar bevestigde voor hem dat veel inwoners dezelfde zorgen delen. Hij benadrukt dat hij niet tegen ontwikkeling is, maar dat plannen moeten passen bij de omgeving en het kwetsbare ecosysteem.",
+      "Bas staat open voor alternatieven, zoals voorzieningen voor natuurfotografen, natuurbeheer of jongeren. Het voorstel van de projectontwikkelaar ligt nu bij de gemeente. In januari wil hij het gesprek aangaan met alle betrokkenen, waarbij hij het belangrijk vindt dat dit respectvol gebeurt, ook richting de ontwikkelaar.",
     ],
     aiKeyPoints: [
       "Petitie tegen McDonald's bij natuurgebied Oisterwijk gestart",
@@ -443,22 +392,10 @@ export const backendMockArticles: BackendArticle[] = [
       },
     ],
     aiSummary: [
-      {
-        type: "paragraph",
-        text: "In oktober 2023 werd de 75-jarige Yvonne tijdens een wandeling in de bossen bij Halsteren vermoord door Elias M., een tbs’er die later bekende dat hij haar had gewurgd. In de rechtbank verklaarde hij dat hij handelde onder invloed van stemmen en een demon die hij ‘Iblis’ noemt. Hoewel hij de moord erkende, bleef hij vragen over de verkrachting ontwijken, ondanks dat zijn DNA werd aangetroffen op de kleding van het slachtoffer.",
-      },
-      {
-        type: "paragraph",
-        text: "Elias heeft een langdurige geschiedenis van psychoses, agressief gedrag en eerdere gewelds- en zedendelicten. Hij verbleef ten tijde van de moord op behandelcentrum Vrederust in Halsteren, waar hij volgens deskundigen juist stabieler was geworden en meer vrijheden had gekregen. Toch ging het op 10 oktober gruwelijk mis toen Yvonne hem in het bos tegenkwam, kort nadat zij afscheid had genomen van haar man.",
-      },
-      {
-        type: "paragraph",
-        text: "Tijdens de rechtszaak werd duidelijk hoe de verdachte sporen probeerde te verbergen en hoe een getuige hem met bladeren zag staan bij de plaats delict. Nabestaanden, waaronder de weduwnaar van Yvonne, vertelden in tranen over het verlies en de blijvende impact op hun leven. De rechtbank buigt zich nu over de straf; de eis volgt donderdag en de uitspraak staat gepland op 26 januari.",
-      },
-      {
-        type: "paragraph",
-        text: "De zaak kreeg extra lading doordat in dezelfde periode een tweede ernstig incident plaatsvond bij Vrederust, waarbij een andere tbs’er ontsnapte en later door de politie werd neergeschoten. Onderzoek wees uit dat de GGZ formeel niets te verwijten valt, maar de instelling besloot wel om een specifieke categorie tbs’ers niet langer op te nemen.",
-      },
+      "In oktober 2023 werd de 75-jarige Yvonne tijdens een wandeling in de bossen bij Halsteren vermoord door Elias M., een tbs’er die later bekende dat hij haar had gewurgd. In de rechtbank verklaarde hij dat hij handelde onder invloed van stemmen en een demon die hij ‘Iblis’ noemt. Hoewel hij de moord erkende, bleef hij vragen over de verkrachting ontwijken, ondanks dat zijn DNA werd aangetroffen op de kleding van het slachtoffer.",
+      "Elias heeft een langdurige geschiedenis van psychoses, agressief gedrag en eerdere gewelds- en zedendelicten. Hij verbleef ten tijde van de moord op behandelcentrum Vrederust in Halsteren, waar hij volgens deskundigen juist stabieler was geworden en meer vrijheden had gekregen. Toch ging het op 10 oktober gruwelijk mis toen Yvonne hem in het bos tegenkwam, kort nadat zij afscheid had genomen van haar man.",
+      "Tijdens de rechtszaak werd duidelijk hoe de verdachte sporen probeerde te verbergen en hoe een getuige hem met bladeren zag staan bij de plaats delict. Nabestaanden, waaronder de weduwnaar van Yvonne, vertelden in tranen over het verlies en de blijvende impact op hun leven. De rechtbank buigt zich nu over de straf; de eis volgt donderdag en de uitspraak staat gepland op 26 januari.",
+      "De zaak kreeg extra lading doordat in dezelfde periode een tweede ernstig incident plaatsvond bij Vrederust, waarbij een andere tbs’er ontsnapte en later door de politie werd neergeschoten. Onderzoek wees uit dat de GGZ formeel niets te verwijten valt, maar de instelling besloot wel om een specifieke categorie tbs’ers niet langer op te nemen.",
     ],
     aiKeyPoints: [
       "Verdachte bekent moord op Yvonne (75) bij Halsteren",
@@ -513,18 +450,9 @@ export const backendMockArticles: BackendArticle[] = [
     ],
 
     aiSummary: [
-      {
-        type: "paragraph",
-        text: "Zes shetlandpony’s die zondagavond in Haaren ontsnapten en zelfs door de politie werden gefilmd terwijl ze door de sneeuw over een fietspad liepen, staan sinds maandagmiddag weer veilig in de wei. Pogingen van agenten om de dieren terug te brengen mislukten, waarna de pony’s op de vlucht sloegen.",
-      },
-      {
-        type: "paragraph",
-        text: "Na ruim een dag in kou en sneeuw werden de dieren teruggevonden op een industrieterrein in Oisterwijk, zo’n 2,5 kilometer van hun wei. Met hulp van vrienden en politie liepen ze rustig terug en kregen ze direct hooi.",
-      },
-      {
-        type: "paragraph",
-        text: "Volgens de eigenaar hebben de pony’s de kou goed doorstaan dankzij hun dikke wintervacht. De politie denkt dat vuurwerk de ontsnapping veroorzaakte. Inmiddels staan alle zes de pony’s weer veilig achter het draad en zijn ze gezond.",
-      },
+      "Zes shetlandpony’s die zondagavond in Haaren ontsnapten en zelfs door de politie werden gefilmd terwijl ze door de sneeuw over een fietspad liepen, staan sinds maandagmiddag weer veilig in de wei. Pogingen van agenten om de dieren terug te brengen mislukten, waarna de pony’s op de vlucht sloegen.",
+      "Na ruim een dag in kou en sneeuw werden de dieren teruggevonden op een industrieterrein in Oisterwijk, zo’n 2,5 kilometer van hun wei. Met hulp van vrienden en politie liepen ze rustig terug en kregen ze direct hooi.",
+      "Volgens de eigenaar hebben de pony’s de kou goed doorstaan dankzij hun dikke wintervacht. De politie denkt dat vuurwerk de ontsnapping veroorzaakte. Inmiddels staan alle zes de pony’s weer veilig achter het draad en zijn ze gezond.",
     ],
     aiKeyPoints: [
       "Zes pony’s ontsnapt in Haaren",
@@ -571,18 +499,9 @@ export const backendMockArticles: BackendArticle[] = [
     ],
 
     aiSummary: [
-      {
-        type: "paragraph",
-        text: "Tilburg en omgeving werden zaterdagochtend getrakteerd op een zeldzaam natuurverschijnsel: sneeuwval gecombineerd met onweer, ook wel thundersnow genoemd. Dit fenomeen ontstaat slechts onder uitzonderlijke weersomstandigheden en komt wereldwijd maar enkele keren per jaar voor.",
-      },
-      {
-        type: "paragraph",
-        text: "Volgens weerman Johnny Willemsen vereist thundersnow een delicate balans tussen koude lucht die sneeuw mogelijk maakt en voldoende instabiliteit voor onweer, een combinatie die in Nederland zelden voorkomt. Daardoor kunnen er soms jarenlang geen waarnemingen zijn.",
-      },
-      {
-        type: "paragraph",
-        text: "Thundersnow verschilt sterk van zomeronweer. Door de reflectie van sneeuwkristallen oogt de bliksem opvallend fel en wit tot goudkleurig, terwijl de sneeuw de donder juist sterk dempt. Wie tijdens dit verschijnsel donder hoort, bevindt zich meestal dicht bij de inslag en moet daarom snel beschutting zoeken.",
-      },
+      "Tilburg en omgeving werden zaterdagochtend getrakteerd op een zeldzaam natuurverschijnsel: sneeuwval gecombineerd met onweer, ook wel thundersnow genoemd. Dit fenomeen ontstaat slechts onder uitzonderlijke weersomstandigheden en komt wereldwijd maar enkele keren per jaar voor.",
+      "Volgens weerman Johnny Willemsen vereist thundersnow een delicate balans tussen koude lucht die sneeuw mogelijk maakt en voldoende instabiliteit voor onweer, een combinatie die in Nederland zelden voorkomt. Daardoor kunnen er soms jarenlang geen waarnemingen zijn.",
+      "Thundersnow verschilt sterk van zomeronweer. Door de reflectie van sneeuwkristallen oogt de bliksem opvallend fel en wit tot goudkleurig, terwijl de sneeuw de donder juist sterk dempt. Wie tijdens dit verschijnsel donder hoort, bevindt zich meestal dicht bij de inslag en moet daarom snel beschutting zoeken.",
     ],
     aiKeyPoints: [
       "Zeldzaam verschijnsel waargenomen in Tilburg",
@@ -642,24 +561,11 @@ export const backendMockArticles: BackendArticle[] = [
         text: "En dus wacht volgend seizoen de vierde klasse. “Dat durf ik zeker aan met deze selectie. We hebben oefenwedstrijden gespeeld tegen derdeklassers die we maar nipt verloren. Afhankelijk van in welke klasse we worden ingedeeld, kunnen we misschien wel meedoen om de bovenste plaatsen of een periode. We hoeven niet bang te zijn om direct weer te degraderen.”",
       },
     ],
-
     aiSummary: [
-      {
-        type: "paragraph",
-        text: "DVS uit Aalst is kampioen geworden in de vijfde klasse F na een overtuigende 6-0 zege op Waalre. Met die titel is de ploeg van trainer Mike de Louw ook het best presterende eerste elftal van Nederland dit seizoen: na 17 wedstrijden heeft DVS nog geen punt laten liggen en wil het die perfecte reeks tot het einde vasthouden.",
-      },
-      {
-        type: "paragraph",
-        text: "De cijfers zijn uitzonderlijk: 51 punten uit 17 duels, 105 doelpunten voor en slechts 19 tegen. De Louw schrijft het succes toe aan een brede selectie met veel ‘echte DVS-jongens’, aangevuld met teruggekeerde spelers. Volgens hem is de kwaliteit zo gelijkmatig dat wissels het niveau niet verlagen, en hij benadrukt dat er geen spelers betaald worden.",
-      },
-      {
-        type: "paragraph",
-        text: "Hoewel de trainer erkent dat de competitie relatief zwak is, kiest DVS bewust voor een zeer aanvallende speelstijl om zoveel mogelijk te scoren, wat soms ook onnodige tegengoals oplevert. Met nog drie wedstrijden te gaan wil De Louw niet verslappen: het doel is zestig punten uit twintig wedstrijden en een historisch doelsaldo.",
-      },
-      {
-        type: "paragraph",
-        text: "Voor De Louw is het kampioenschap een hoogtepunt, mede omdat hij bij DVS is opgegroeid en er al jong als jeugdtrainer begon. Volgend seizoen speelt de club in de vierde klasse. De trainer denkt dat zijn selectie dat niveau aankan en zelfs kan meedoen om een periode, en hij verwacht niet dat DVS meteen weer hoeft te vrezen voor degradatie.",
-      },
+      "DVS uit Aalst is kampioen geworden in de vijfde klasse F na een overtuigende 6-0 zege op Waalre. Met die titel is de ploeg van trainer Mike de Louw ook het best presterende eerste elftal van Nederland dit seizoen: na 17 wedstrijden heeft DVS nog geen punt laten liggen en wil het die perfecte reeks tot het einde vasthouden.",
+      "De cijfers zijn uitzonderlijk: 51 punten uit 17 duels, 105 doelpunten voor en slechts 19 tegen. De Louw schrijft het succes toe aan een brede selectie met veel ‘echte DVS-jongens’, aangevuld met teruggekeerde spelers. Volgens hem is de kwaliteit zo gelijkmatig dat wissels het niveau niet verlagen, en hij benadrukt dat er geen spelers betaald worden.",
+      "Hoewel de trainer erkent dat de competitie relatief zwak is, kiest DVS bewust voor een zeer aanvallende speelstijl om zoveel mogelijk te scoren, wat soms ook onnodige tegengoals oplevert. Met nog drie wedstrijden te gaan wil De Louw niet verslappen: het doel is zestig punten uit twintig wedstrijden en een historisch doelsaldo.",
+      "Voor De Louw is het kampioenschap een hoogtepunt, mede omdat hij bij DVS is opgegroeid en er al jong als jeugdtrainer begon. Volgend seizoen speelt de club in de vierde klasse. De trainer denkt dat zijn selectie dat niveau aankan en zelfs kan meedoen om een periode, en hij verwacht niet dat DVS meteen weer hoeft te vrezen voor degradatie.",
     ],
     aiKeyPoints: [
       "DVS uit Aalst pakt titel na 6-0 op Waalre",

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-import { RecapCard } from "@/components/weekly/RecapCard";
+import { RecapArticle, RecapCard } from "@/components/weekly/RecapCard";
 import { BottomNav } from "@/components/layout/BottomNav";
 
 import { backendMockArticles } from "@/lib/mockDataBackend";
@@ -20,7 +20,32 @@ export default function WeeklyPage() {
   const router = useRouter();
   const [preferences, setPreferences] = useState<UserPreferences | null>(null);
 
+  const [recapSections, setRecapSections] = useState<RecapSection[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   const containerClass = "mx-auto w-full max-w-[808px] px-4";
+
+  type RecapSection = {
+    category: string;
+    icon: "news" | "sport" | "business" | "nature" | "entertainment";
+    articles: {
+      articleId: string;
+      regionName: string;
+      title: string;
+      teaser: string;
+    }[];
+  };
+
+  const mapThemeToIcon = (theme: string): RecapSection["icon"] => {
+    const t = theme.toLowerCase();
+
+    if (t.includes("sport")) return "sport";
+    if (t.includes("innovatie") || t.includes("bedrijven")) return "business";
+    if (t.includes("natuur")) return "nature";
+    if (t.includes("entertainment") || t.includes("cultuur")) return "entertainment";
+    return "news";
+  };
 
   // localStorage -> alleen client
   useEffect(() => {
@@ -36,51 +61,37 @@ export default function WeeklyPage() {
       router.replace("/location");
       return;
     }
+
+    const fetchRecap = async () => {
+      try {
+        setLoading(true);
+
+        const res = await fetch(`http://localhost:8000/personalisation/weekly/${prefs.userid}`);
+        if (!res.ok) {
+          throw new Error("Recap ophalen mislukt");
+        }
+
+        const data = await res.json();
+
+        const sections: RecapSection[] = data.themes.map(
+          (theme: any) => ({
+            category: theme.theme,
+            icon: mapThemeToIcon(theme.theme),
+            articles: theme.articles,
+          })
+        );
+
+        setRecapSections(sections);
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecap();
+
   }, [router]);
-
-  const articles = useMemo(() => backendMockArticles.map(mapBackendToUI), []);
-
-  const filteredArticles = useMemo(() => {
-    if (!preferences) return [];
-    return filterArticlesByPreferences(articles, preferences);
-  }, [articles, preferences]);
-
-  const recapSections = useMemo(() => {
-    const grouped: Record<string, typeof filteredArticles> = {};
-
-    for (const a of filteredArticles) {
-      const key = a.category || "Overig";
-      if (!grouped[key]) grouped[key] = [];
-      grouped[key].push(a);
-    }
-
-    return Object.entries(grouped).map(([category, arts]) => ({
-      category,
-      icon: category.toLowerCase().includes("sport")
-        ? ("sport" as const)
-        : category.toLowerCase().includes("innovatie") ||
-          category.toLowerCase().includes("bedrijven")
-        ? ("business" as const)
-        : ("news" as const),
-      articles: arts.slice(0, 4).map((a) => ({
-        id: a.id,
-        region: a.location, // Eindhoven
-        title: a.title,
-        subtitle: a.summary,
-        isNew: a.isNew,
-        isTrending: a.isTrending,
-      })),
-    }));
-  }, [filteredArticles]);
-
-  useEffect(() => {
-    console.log("filteredArticles length:", filteredArticles.length);
-    console.log("recapSections:", recapSections);
-    console.log(
-      "first section articles length:",
-      recapSections?.[0]?.articles?.length
-    );
-  }, [filteredArticles, recapSections]);
 
   // labels: current + regions
   // ✅ actieve locaties = regions + current (alleen als live aan staat)
@@ -149,6 +160,9 @@ export default function WeeklyPage() {
             {radiusLabel ? ` (${radiusLabel})` : ""}
           </p>
         </div>
+
+        {loading ? "Bezig met artikelen laden..." : null}
+        {error ? error : null}
 
         <div className="space-y-4">
           {recapSections.length > 0 ? (

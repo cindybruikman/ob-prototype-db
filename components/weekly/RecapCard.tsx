@@ -1,19 +1,19 @@
 import Link from "next/link";
-import { Newspaper, Trophy, Lightbulb, LucideIcon } from "lucide-react";
+import { Newspaper, Trophy, Lightbulb, LucideIcon, Leaf, Drama } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-type RecapArticle = {
-  id: string;
-  region: string;
+export type RecapArticle = {
+  articleId: string;
+  regionName: string;
   title: string;
-  subtitle: string;
+  teaser: string;
   isNew?: boolean;
   isTrending?: boolean;
 };
 
 type RecapCardProps = {
   category: string;
-  icon: "news" | "sport" | "business";
+  icon: "news" | "sport" | "business" | "nature" | "entertainment";
   articles: RecapArticle[];
 };
 
@@ -21,6 +21,8 @@ const iconMap: Record<RecapCardProps["icon"], LucideIcon> = {
   news: Newspaper,
   sport: Trophy,
   business: Lightbulb,
+  nature: Leaf,
+  entertainment: Drama,
 };
 
 export function RecapCard({ category, icon, articles }: RecapCardProps) {
@@ -40,10 +42,10 @@ export function RecapCard({ category, icon, articles }: RecapCardProps) {
       ) : (
         <div className="space-y-4">
           {articles.map((article) => (
-            <div key={article.id} className="space-y-1">
+            <div key={article.articleId} className="space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="font-bold text-foreground">
-                  {article.region}
+                  {article.regionName}
                 </span>
                 <span className="text-muted-foreground">–</span>
                 <span className="text-foreground">{article.title}</span>
@@ -62,10 +64,10 @@ export function RecapCard({ category, icon, articles }: RecapCardProps) {
               </div>
 
               <p className="text-sm text-muted-foreground italic line-clamp-2">
-                {article.subtitle}
+                {article.teaser}
               </p>
 
-              <Link href={`/article/${article.id}`}>
+              <Link href={`/article/${article.articleId}`}>
                 <Button variant="outline" size="sm" className="mt-2">
                   Lees verder
                 </Button>

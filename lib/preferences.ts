@@ -23,6 +23,7 @@ export type ThemeKey =
 export type LatLng = { lat: number; lng: number };
 
 export interface UserPreferences {
+  userid: string;
   savedLocations: SavedLocation[];
   useCurrentLocation: boolean;
 
@@ -41,6 +42,7 @@ export interface UserPreferences {
 const STORAGE_KEY = "news-app-preferences";
 
 const defaultPreferences: UserPreferences = {
+  userid: "69528cc660ca8198fe8de666",
   savedLocations: [],
   useCurrentLocation: false,
   currentCoords: undefined,
