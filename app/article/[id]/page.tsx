@@ -9,7 +9,6 @@ import { ArticleContent } from "@/components/news/ArticleContent";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { Button } from "@/components/ui/button";
 
-import { backendMockArticles } from "@/lib/mockDataBackend";
 import { mapBackendToUI, UIArticle } from "@/lib/mapBackendToUI";
 
 export default function ArticlePage() {
@@ -86,8 +85,8 @@ export default function ArticlePage() {
     );
   }
 
-  if (loading) return "Bezig met laden...";
-  if (error) return {error};
+  if (loading) return <p>Bezig met laden...</p>;
+  if (error) return <p>Er is iets misgegaan</p>;
 
   return (
     <div className="min-h-screen bg-background pb-20">

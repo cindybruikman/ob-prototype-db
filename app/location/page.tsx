@@ -12,10 +12,10 @@ export default function LocationPage() {
   const router = useRouter();
   const containerClass = "mx-auto w-full max-w-[808px] px-4";
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     const prefs = getPreferences();
 
-    savePreferences({
+    await savePreferences({
       ...prefs,
       hasCompletedSetup: true,
     });

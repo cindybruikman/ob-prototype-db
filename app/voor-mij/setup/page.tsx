@@ -36,9 +36,10 @@ export default function VoorMijSetupIntroPage() {
     );
   };
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     const next = { ...prefs, hasSeenIntro: true };
-    savePreferences(next);
+    await savePreferences(next);
+    
     router.push("/location");
   };
 

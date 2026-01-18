@@ -9,11 +9,9 @@ import Image from "next/image";
 import { PersonalisedNewsCard } from "@/components/news/PersonalisedNewsCard";
 import { BottomNav } from "@/components/layout/BottomNav";
 
-import { backendMockArticles } from "@/lib/mockDataBackend";
-import { ApiLocationGroup, mapBackendToUI, UIArticle } from "@/lib/mapBackendToUI";
+import { ApiLocationGroup } from "@/lib/mapBackendToUI";
 import {
   getPreferences,
-  filterArticlesByPreferences,
   type UserPreferences,
 } from "@/lib/preferences";
 

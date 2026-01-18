@@ -42,7 +42,7 @@ export interface UserPreferences {
 const STORAGE_KEY = "news-app-preferences";
 
 const defaultPreferences: UserPreferences = {
-  userid: "69528cc660ca8198fe8de666",
+  userid: "69528cc660ca8198fe8de666", //TODO empty string
   savedLocations: [],
   useCurrentLocation: false,
   currentCoords: undefined,
@@ -62,6 +62,7 @@ export function getPreferences(): UserPreferences {
   if (!isBrowser()) return defaultPreferences;
 
   try {
+    //TODO technically: api call to get preferences server-side
     const stored = window.localStorage.getItem(STORAGE_KEY);
     if (stored) {
       const parsed = JSON.parse(stored) as Partial<UserPreferences>;
@@ -93,11 +94,50 @@ export function getPreferences(): UserPreferences {
   return defaultPreferences;
 }
 
-export function savePreferences(prefs: UserPreferences): void {
+export async function savePreferences(prefs: UserPreferences): Promise<UserPreferences | void> {
   if (!isBrowser()) return;
 
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+    let updatedPrefs = { ...prefs };
+
+    if (prefs.userid === "" && !prefs.hasSeenIntro) {
+      const res = await fetch("http://localhost:8000/users/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify({preferences: prefs})
+      });
+
+      if (!res.ok) {
+        throw new Error("Kan geen nieuwe gebruiker aanmaken");
+      }
+
+      const data = await res.json();
+      console.log(data.id);
+      updatedPrefs.userid = data.id;
+    }
+    else {
+      console.log("Updating prefs: ", prefs);
+      const res = await fetch(
+        `http://localhost:8000/users/${prefs.userid}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({preferences: prefs}),
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Kan voorkeuren niet opslaan");
+      }
+    }
+
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedPrefs));
+
+    return updatedPrefs;
   } catch (e) {
     console.error("Error saving preferences:", e);
   }
@@ -105,6 +145,8 @@ export function savePreferences(prefs: UserPreferences): void {
 
 export function resetPreferences() {
   if (!isBrowser()) return;
+
+  //TODO: api call to delete preferences server-side
   window.localStorage.removeItem(STORAGE_KEY);
 }
 

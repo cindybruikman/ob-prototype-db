@@ -24,7 +24,7 @@ export default function ThemesPage() {
     else if (!p.hasCompletedSetup) router.replace("/location");
   }, [router]);
 
-  const toggleTheme = (theme: ThemeKey) => {
+  const toggleTheme = async (theme: ThemeKey) => {
     if (!prefs) return;
 
     const exists = prefs.selectedThemes.includes(theme);
@@ -36,10 +36,14 @@ export default function ThemesPage() {
     };
 
     setPrefs(next);
-    savePreferences(next);
+    try {
+      await savePreferences(next);
+    } catch (e) {
+      console.error("Failed to save theme preferences", e);
+    }
   };
 
-  const setSelectedThemes = (themes: ThemeKey[]) => {
+  const setSelectedThemes = async (themes: ThemeKey[]) => {
     if (!prefs) return;
 
     const next: UserPreferences = {
@@ -48,7 +52,11 @@ export default function ThemesPage() {
     };
 
     setPrefs(next);
-    savePreferences(next);
+    try {
+      await savePreferences(next);
+    } catch (e) {
+      console.error("Failed to save theme preferences", e);
+    }
   };
 
   const handleContinue = () => {

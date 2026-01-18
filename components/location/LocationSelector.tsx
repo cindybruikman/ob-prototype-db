@@ -94,7 +94,20 @@ export function LocationSelector({ onContinue }: Props) {
 
   useEffect(() => {
     if (!preferences) return;
-    savePreferences(preferences);
+
+    const sync = async () => {
+      const updated = await savePreferences(preferences);
+
+      if (
+        updated &&
+        updated.userid &&
+        updated.userid !== preferences.userid
+      ) {
+        setPreferences(updated);
+      }
+    };
+
+    sync();
   }, [preferences]);
 
   // --- Draft state (1 locatie instellen) ---

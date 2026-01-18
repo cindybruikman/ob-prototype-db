@@ -8,11 +8,8 @@ import { ArrowLeft } from "lucide-react";
 import { RecapArticle, RecapCard } from "@/components/weekly/RecapCard";
 import { BottomNav } from "@/components/layout/BottomNav";
 
-import { backendMockArticles } from "@/lib/mockDataBackend";
-import { mapBackendToUI } from "@/lib/mapBackendToUI";
 import {
   getPreferences,
-  filterArticlesByPreferences,
   type UserPreferences,
 } from "@/lib/preferences";
 

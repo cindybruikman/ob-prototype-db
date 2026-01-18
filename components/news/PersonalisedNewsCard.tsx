@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge"; // alleen als je badges nog gebruikt
-import type { UIArticle, ApiArticle } from "@/lib/mapBackendToUI";
+import type { ApiArticle } from "@/lib/mapBackendToUI";
 import Image from "next/image";
 
 type Variant = "hero" | "compact" | "default";
@@ -25,13 +25,13 @@ export function PersonalisedNewsCard({
   showDate = true,
 }: PersonalisedNewsCardProps) {
   const hasImg = Boolean(article.imageUrl);
-  // const containerClass = "mx-auto w-full max-w-[808px] px-4";
+  const containerClass = "mx-auto w-full max-w-[808px] px-4";
 
   // ✅ HERO: grote afbeelding boven + titel overlay/look
   if (variant === "hero") {
     return (
       <Link href={`/article/${article.id}`} className="block">
-        {/* <div > */}
+        <div className={containerClass}>
           <article className="bg-card rounded-xl overflow-hidden border border-border">
             {showImage && (
               <div className="relative aspect-[808/424] bg-secondary">
@@ -58,7 +58,7 @@ export function PersonalisedNewsCard({
               </div>
             )}
           </article>
-        {/* </div> */}
+        </div>
       </Link>
     );
   }

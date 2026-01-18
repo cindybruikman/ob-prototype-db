@@ -28,6 +28,10 @@ export type ApiArticle = {
     imageUrl?: string;
   };
 
+export type ApiArticlesGroup = {
+  articles: ApiArticle[];
+};
+
 export type ApiLocationGroup = {
     locationName: string;
     articles: ApiArticle[];
