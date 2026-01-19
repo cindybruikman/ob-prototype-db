@@ -37,6 +37,10 @@ export type ApiLocationGroup = {
     articles: ApiArticle[];
   };
 
+export type ApiRegion = {
+  id: string;
+  regionName: string;
+};
 
 function pickString(...values: Array<unknown>): string {
   for (const v of values) {

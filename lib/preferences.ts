@@ -39,10 +39,33 @@ export interface UserPreferences {
   selectedThemes: ThemeKey[];
 }
 
+function mapUserPreferencesToApi(prefs: UserPreferences) {
+  return {
+    id: prefs.userid,
+    useLiveLocation: prefs.useCurrentLocation,
+
+    locations:
+      prefs.savedLocations.length > 0
+        ? prefs.savedLocations.map((loc) => ({
+            locationName: loc.label,
+            regionName: loc.name,
+            // lat: loc.label.lat,
+            // lng: loc.label.lng,
+            radiusKm: loc.radius,
+          }))
+        : [],
+
+    themes:
+      prefs.selectedThemes.length > 0
+        ? prefs.selectedThemes
+        : [],
+  };
+}
+
 const STORAGE_KEY = "news-app-preferences";
 
 const defaultPreferences: UserPreferences = {
-  userid: "69528cc660ca8198fe8de666", //TODO empty string
+  userid: "", //TODO empty string
   savedLocations: [],
   useCurrentLocation: false,
   currentCoords: undefined,
@@ -75,6 +98,8 @@ export function getPreferences(): UserPreferences {
         name: String(l.name),
         radius: Number(l.radius ?? 15),
         source: l.source === "current" ? "current" : "region",
+        lat: Number(l.lat ?? 0),
+        lng: Number(l.lng ?? 0),
         label:
           l.label === "Woonplaats" || l.label === "Werk" || l.label === "Anders"
             ? l.label
@@ -100,13 +125,12 @@ export async function savePreferences(prefs: UserPreferences): Promise<UserPrefe
   try {
     let updatedPrefs = { ...prefs };
 
-    if (prefs.userid === "" && !prefs.hasSeenIntro) {
+    if (prefs.userid === "" || prefs.userid === undefined) {
       const res = await fetch("http://localhost:8000/users/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify({preferences: prefs})
       });
 
       if (!res.ok) {
@@ -114,21 +138,25 @@ export async function savePreferences(prefs: UserPreferences): Promise<UserPrefe
       }
 
       const data = await res.json();
-      console.log(data.id);
-      updatedPrefs.userid = data.id;
+      console.log(data);
+      updatedPrefs = defaultPreferences;
+      updatedPrefs.userid = data;
+      updatedPrefs.hasSeenIntro = true;
     }
     else {
       console.log("Updating prefs: ", prefs);
-      const res = await fetch(
-        `http://localhost:8000/users/${prefs.userid}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({preferences: prefs}),
-        }
-      );
+      console.log("api call omdat locaties en themas zijn gekozen")
+      //map user prefs to server User structuur
+      const payload = mapUserPreferencesToApi(updatedPrefs);
+      console.log(payload)
+
+      const res = await fetch(`http://localhost:8000/users/${prefs.userid}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
       if (!res.ok) {
         throw new Error("Kan voorkeuren niet opslaan");
@@ -165,26 +193,26 @@ function normalize(s: string) {
     .trim();
 }
 
-export function filterArticlesByPreferences<T extends { location: string }>(
-  articles: T[],
-  prefs: UserPreferences
-): T[] {
-  const saved = prefs.savedLocations ?? [];
+// export function filterArticlesByPreferences<T extends { location: string }>(
+//   articles: T[],
+//   prefs: UserPreferences
+// ): T[] {
+//   const saved = prefs.savedLocations ?? [];
 
-  // ✅ active = alle regio's + current (alleen als live aan staat)
-  const active = saved.filter(
-    (l) =>
-      l.source === "region" ||
-      (l.source === "current" && prefs.useCurrentLocation)
-  );
+//   // ✅ active = alle regio's + current (alleen als live aan staat)
+//   const active = saved.filter(
+//     (l) =>
+//       l.source === "region" ||
+//       (l.source === "current" && prefs.useCurrentLocation)
+//   );
 
-  // niets gekozen => alles tonen (prototype)
-  if (active.length === 0) return articles;
+//   // niets gekozen => alles tonen (prototype)
+//   if (active.length === 0) return articles;
 
-  const needles = active.map((l) => normalize(l.name));
+//   const needles = active.map((l) => normalize(l.name));
 
-  return articles.filter((article) => {
-    const hay = normalize(article.location);
-    return needles.some((n) => hay.includes(n));
-  });
-}
+//   return articles.filter((article) => {
+//     const hay = normalize(article.location);
+//     return needles.some((n) => hay.includes(n));
+//   });
+// }

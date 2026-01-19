@@ -29,7 +29,7 @@ export default function ArticlePage() {
         setLoading(true);
 
         const res = await fetch(`http://localhost:8000/articles/${id}`);
-        console.log(res);
+        // console.log(res);
         if (!res.ok) {
           throw new Error("Artikel niet gevonden");
         }

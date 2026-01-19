@@ -14,6 +14,7 @@ import {
   type SavedLocation,
   type LocationLabel,
 } from "@/lib/preferences";
+import { ApiRegion } from "@/lib/mapBackendToUI";
 
 /** ---------- Helpers ---------- */
 function normalize(s: string) {
@@ -93,6 +94,7 @@ export function LocationSelector({ onContinue }: Props) {
   }, []);
 
   useEffect(() => {
+    console.log(preferences);
     if (!preferences) return;
 
     const sync = async () => {
@@ -124,6 +126,7 @@ export function LocationSelector({ onContinue }: Props) {
   // Search list (voor regio)
   const [search, setSearch] = useState("");
   const [showRegionList, setShowRegionList] = useState(false);
+  const [availableRegions, setAvailableRegions] = useState<ApiRegion[]>([]);
 
   // ✅ early return voorkomt alle null errors + hydration mismatch
 
@@ -131,6 +134,16 @@ export function LocationSelector({ onContinue }: Props) {
     () => (preferences?.savedLocations ?? []).find((l) => l.id === "current"),
     [preferences?.savedLocations]
   );
+
+  useEffect(() => {
+    const fetchRegions = async () => {
+      const res = await fetch("http://localhost:8000/articles/regions");
+      const data = await res.json();
+      setAvailableRegions(Array.isArray(data.regions) ? data.regions : []);
+    };
+
+    fetchRegions();
+  }, []);
 
   const filteredAvailable = useMemo(() => {
     const already = new Set(
@@ -141,10 +154,14 @@ export function LocationSelector({ onContinue }: Props) {
 
     const q = normalize(search);
 
-    return availableLocations
-      .filter((loc) => !already.has(normalize(loc)))
-      .filter((loc) => (q ? normalize(loc).includes(q) : true));
-  }, [preferences?.savedLocations, search]);
+    return availableRegions
+      .filter((r) => !already.has(normalize(r.regionName)))
+      .filter((r) =>
+        q ? normalize(r.regionName).includes(q) : true
+      );
+  }, [availableRegions, preferences?.savedLocations, search]);
+
+
   // --- Helpers to update existing saved locations ---
   const updateLocationRadius = (id: string, radius: number) => {
     setPreferences((prev) => {
@@ -493,30 +510,30 @@ export function LocationSelector({ onContinue }: Props) {
 
               {showRegionList && (
                 <div className="bg-background border border-border rounded-lg p-2 max-h-56 overflow-y-auto">
-                  {filteredAvailable.slice(0, 40).map((loc) => (
+                  {filteredAvailable.slice(0, 40).map((region) => (
                     <button
-                      key={loc}
+                      key={region.id}
                       type="button"
                       onClick={() => {
-                        setDraftName(loc);
-                        setSearch(loc);
-                        setShowRegionList(false); // ✅ dropdown weg
+                        setDraftName(region.regionName);
+                        setSearch(region.regionName);
+                        setShowRegionList(false);
                       }}
                       className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
-                        draftName === loc
+                        draftName === region.regionName
                           ? "bg-secondary"
                           : "hover:bg-secondary"
                       }`}
                     >
-                      {loc}
+                      {region.regionName}
                     </button>
                   ))}
 
-                  {filteredAvailable.length === 0 ? (
+                  {filteredAvailable.length === 0 && (
                     <div className="text-sm text-muted-foreground px-3 py-2">
                       Geen resultaten.
                     </div>
-                  ) : null}
+                  )}
                 </div>
               )}
 
