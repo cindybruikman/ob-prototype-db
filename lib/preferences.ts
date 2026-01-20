@@ -47,10 +47,8 @@ function mapUserPreferencesToApi(prefs: UserPreferences) {
     locations:
       prefs.savedLocations.length > 0
         ? prefs.savedLocations.map((loc) => ({
-            locationName: loc.label,
+            locationName: loc.source === "current" ? "Huidige locatie" : loc.label,
             regionName: loc.name,
-            // lat: loc.label.lat,
-            // lng: loc.label.lng,
             radiusKm: loc.radius,
           }))
         : [],
@@ -192,27 +190,3 @@ function normalize(s: string) {
     .replace(/\s+/g, " ")
     .trim();
 }
-
-// export function filterArticlesByPreferences<T extends { location: string }>(
-//   articles: T[],
-//   prefs: UserPreferences
-// ): T[] {
-//   const saved = prefs.savedLocations ?? [];
-
-//   // ✅ active = alle regio's + current (alleen als live aan staat)
-//   const active = saved.filter(
-//     (l) =>
-//       l.source === "region" ||
-//       (l.source === "current" && prefs.useCurrentLocation)
-//   );
-
-//   // niets gekozen => alles tonen (prototype)
-//   if (active.length === 0) return articles;
-
-//   const needles = active.map((l) => normalize(l.name));
-
-//   return articles.filter((article) => {
-//     const hay = normalize(article.location);
-//     return needles.some((n) => hay.includes(n));
-//   });
-// }
